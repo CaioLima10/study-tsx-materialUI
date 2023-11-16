@@ -2,15 +2,12 @@ import { Avatar,
         Box, 
         Divider, 
         Drawer, 
-        Icon, 
         List, 
-        ListItemButton, 
-        ListItemIcon, 
-        ListItemText, 
         useMediaQuery, 
         useTheme }
         from "@mui/material";
 import AuthContextDrawer from "../../context/AuthDrawer";
+import ListItemLink from "./ListItemLink";
 
 interface ILateralMenuProps{
     children: JSX.Element
@@ -56,12 +53,18 @@ export default function LateralMenu({ children }: ILateralMenuProps){
 
                     <Box flex={1}>
                         <List>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    <Icon>home</Icon>
-                                </ListItemIcon>
-                                <ListItemText primary="Página inicial" />
-                            </ListItemButton>
+                            <ListItemLink
+                                icon="home"
+                                label="Pagina inicial"
+                                to="/Página-inicial"
+                                onClick={smDown ? toggleDrawerOpen : undefined}
+                            />
+                            <ListItemLink
+                                icon="trash"
+                                label="cidade"
+                                to="/cidade"
+                                onClick={smDown ? toggleDrawerOpen : undefined}
+                            />
                         </List>
                     </Box>
                 </Box>
