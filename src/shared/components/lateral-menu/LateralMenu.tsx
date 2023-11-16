@@ -7,8 +7,10 @@ import { Avatar,
         ListItemButton, 
         ListItemIcon, 
         ListItemText, 
+        useMediaQuery, 
         useTheme }
         from "@mui/material";
+import AuthContextDrawer from "../../context/AuthDrawer";
 
 interface ILateralMenuProps{
     children: JSX.Element
@@ -17,9 +19,17 @@ interface ILateralMenuProps{
 export default function LateralMenu({ children }: ILateralMenuProps){
 
     const theme = useTheme()
+    const smDown = useMediaQuery(theme.breakpoints.down('sm'))
+
+    const {isDrawerOpen , toggleDrawerOpen } = AuthContextDrawer()
+
   return (
         <>
-            <Drawer variant="permanent">
+            <Drawer 
+                open={isDrawerOpen}  
+                variant={smDown ? 'temporary' : 'permanent'} 
+                onClose={toggleDrawerOpen}    
+            >
                 <Box 
                     width={theme.spacing(28)}
                     height="100%"
@@ -56,7 +66,7 @@ export default function LateralMenu({ children }: ILateralMenuProps){
                     </Box>
                 </Box>
             </Drawer>
-            <Box height={"100vh"} marginLeft={theme.spacing(28)}>
+            <Box height={"100vh"} marginLeft={smDown ? 0 : theme.spacing(28)}>
                 { children }
             </Box>
         </>
