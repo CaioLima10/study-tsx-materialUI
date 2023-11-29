@@ -5,7 +5,7 @@ export default function Dashboard() {
   return (
         <BasePageLayout 
           title="Página Inicial" 
-          toolbar={<DetailTools showSaveAndDeleteButton/>}
+          toolbar={<DetailTools showSaveAndDeleteButtonLoading/>}
           
           >
             

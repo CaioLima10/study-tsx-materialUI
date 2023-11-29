@@ -3,6 +3,7 @@ import { Box,
         Divider, 
         Icon, 
         Paper, 
+        Skeleton, 
         useTheme 
     } from "@mui/material";
 import { IDetailToolsProps } from "./types";
@@ -16,6 +17,12 @@ export default function DetailTools({
     showDeleteButton = true,
     showSaveButton = true,
     showSaveAndDeleteButton = false,
+
+    showNewButtonLoading = false,
+    showBackButtonLoading = false,
+    showDeleteButtonLoading = false,
+    showSaveButtonLoading = false,
+    showSaveAndDeleteButtonLoading = false,
 
     clickButtonNew,
     clickButtonBack,
@@ -37,7 +44,7 @@ export default function DetailTools({
         alignItems="center"
         display="flex"
     >
-        {showSaveButton && (
+        {(showSaveButton && !showSaveButtonLoading) && (
             <Button 
                 variant="contained"
                 startIcon={<Icon>save</Icon>}
@@ -46,16 +53,25 @@ export default function DetailTools({
                 Salvar
             </Button>
         )}
-        {showSaveAndDeleteButton &&(
+
+        {showSaveButtonLoading &&(
+            <Skeleton width={110} height={60}/>
+        )}
+
+        {(showSaveAndDeleteButton && !showSaveAndDeleteButtonLoading) &&(
             <Button 
-                variant="outlined"
-                startIcon={<Icon>save</Icon>}
-                onClick={clickButtonSaveAndDelete}
+            variant="outlined"
+            startIcon={<Icon>save</Icon>}
+            onClick={clickButtonSaveAndDelete}
             >
                 Salvar e voltar
             </Button>
         )}
-        {showDeleteButton &&(
+        {showSaveAndDeleteButtonLoading &&(
+            <Skeleton width={180} height={60}/>
+        )}
+
+        {(showDeleteButton && !showDeleteButtonLoading) &&(
             <Button 
                 variant="outlined"
                 startIcon={<Icon>delete</Icon>}
@@ -64,7 +80,11 @@ export default function DetailTools({
                 Apagar
             </Button>
         )}
-        {showNewButton &&(
+        {showDeleteButtonLoading &&(
+            <Skeleton width={110} height={60}/>
+        )}
+
+        {(showNewButton && showNewButtonLoading) &&(
             <Button 
                 variant="outlined"
                 startIcon={<Icon>add</Icon>}
@@ -73,10 +93,13 @@ export default function DetailTools({
                 {textNewButton}
             </Button>
         )}
+        {showNewButtonLoading &&(
+            <Skeleton width={100} height={60}/>
+        )}
 
         <Divider variant="middle" orientation="vertical"/>
 
-        {showBackButton &&(            
+        {(showBackButton && !showBackButtonLoading) &&(            
             <Button 
                 variant="outlined"
                 startIcon={<Icon>arrow_back</Icon>}
@@ -85,6 +108,11 @@ export default function DetailTools({
                 Voltar
             </Button>
         )}
+
+        {showBackButtonLoading &&(
+            <Skeleton width={110} height={60}/>
+        )}
+
     </Box>
   )
 }
