@@ -3,11 +3,17 @@ import { Avatar,
         Divider, 
         Drawer, 
         List, 
+        ListItemButton, 
+        ListItemIcon, 
+        ListItemText, 
         useMediaQuery, 
         useTheme }
         from "@mui/material";
 import AuthContextDrawer from "../../context/AuthDrawer";
 import ListItemLink from "./ListItemLink";
+import AuthContextTheme from "../../context/AuthTheme";
+import { DarkModeTwoTone } from "@mui/icons-material";
+import WbSunnyTwoToneIcon from '@mui/icons-material/WbSunnyTwoTone';
 
 interface ILateralMenuProps{
     children: JSX.Element
@@ -18,7 +24,9 @@ export default function LateralMenu({ children }: ILateralMenuProps){
     const theme = useTheme()
     const smDown = useMediaQuery(theme.breakpoints.down('sm'))
 
-    const {isDrawerOpen , toggleDrawerOpen } = AuthContextDrawer()
+    const {isDrawerOpen , toggleDrawerOpen , drawerOptions} = AuthContextDrawer()
+
+    const { toggleTheme , themeName } = AuthContextTheme()
 
   return (
         <>
@@ -53,18 +61,28 @@ export default function LateralMenu({ children }: ILateralMenuProps){
 
                     <Box flex={1}>
                         <List>
-                            <ListItemLink
-                                icon="home"
-                                label="Pagina inicial"
-                                to="/Página-inicial"
-                                onClick={smDown ? toggleDrawerOpen : undefined}
-                            />
-                            <ListItemLink
-                                icon="trash"
-                                label="cidade"
-                                to="/cidade"
-                                onClick={smDown ? toggleDrawerOpen : undefined}
-                            />
+                            { drawerOptions.map(drawerOption => (
+                                <ListItemLink
+                                    key={drawerOption.path}
+                                    icon={drawerOption.icon}
+                                    label={drawerOption.label}
+                                    to={drawerOption.path}
+                                    onClick={smDown ? toggleDrawerOpen : undefined}
+                                />
+                            ))}
+                        </List>
+                    </Box>
+                    <Box>
+                        <List>
+                        <ListItemButton onClick={toggleTheme}>
+                            <ListItemIcon>  
+                                { themeName === 'dark' ?  
+                                (<DarkModeTwoTone/>) 
+                                : <WbSunnyTwoToneIcon/>}
+                                
+                            </ListItemIcon>
+                            <ListItemText  primary={themeName} />
+                        </ListItemButton>
                         </List>
                     </Box>
                 </Box>

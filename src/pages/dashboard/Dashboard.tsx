@@ -1,11 +1,18 @@
+import ListingTools from "../../shared/components/listing-tools/ListingTools";
 import BasePageLayout from "../../shared/layout/BasePageLayout";
 
 export default function Dashboard() {
   return (
-    <div>
-        <BasePageLayout title="Página Inicial" toolbar={<>barra de ferramentas</>}>
+        <BasePageLayout 
+          title="Página Inicial" 
+          toolbar={<ListingTools
+            showInputSearch 
+            textNewButton="nova"
+            showNewButton
+          />}
+          
+          >
             <span>children</span>
         </BasePageLayout>
-    </div>
   )
 }
