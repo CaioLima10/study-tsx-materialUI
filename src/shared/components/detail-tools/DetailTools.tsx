@@ -1,6 +1,44 @@
-import { Box, Button, Divider, Icon, Paper, useTheme } from "@mui/material";
+import { Box, 
+        Button, 
+        Divider, 
+        Icon, 
+        Paper, 
+        useTheme 
+    } from "@mui/material";
 
-export default function DetailTools() {
+interface IDetailToolsProps{
+    textNewButton?: string
+
+    showNewButton?: boolean
+    showBackButton?: boolean
+    showDeleteButton?: boolean
+    showSaveButton?: boolean
+    showSaveAndDeleteButton?: boolean
+
+    clickButtonNew?: () => void
+    clickButtonBack?: () => void
+    clickButtonDelete?: () => void
+    clickButtonSave?: () => void
+    clickButtonSaveAndDelete?: () => void
+
+}
+
+export default function DetailTools({
+    textNewButton = "Novo",
+
+    showNewButton = true,
+    showBackButton = true,
+    showDeleteButton = true,
+    showSaveButton = true,
+    showSaveAndDeleteButton = false,
+
+    clickButtonNew,
+    clickButtonBack,
+    clickButtonDelete,
+    clickButtonSave,
+    clickButtonSaveAndDelete
+
+}: IDetailToolsProps) {
 
     const theme = useTheme()
 
@@ -15,39 +53,54 @@ export default function DetailTools() {
         alignItems="center"
         display="flex"
     >
-        <Button 
-            variant="contained"
-            startIcon={<Icon>save</Icon>}
-        >
-            Salvar
-        </Button>
-        <Button 
-            variant="outlined"
-            startIcon={<Icon>save</Icon>}
-        >
-            Salvar e voltar
-        </Button>
-        <Button 
-            variant="outlined"
-            startIcon={<Icon>delete</Icon>}
-        >
-            Apagar
-        </Button>
-        <Button 
-            variant="outlined"
-            startIcon={<Icon>add</Icon>}
-        >
-            Novo
-        </Button>
+        {showSaveButton && (
+            <Button 
+                variant="contained"
+                startIcon={<Icon>save</Icon>}
+                onClick={clickButtonSave}
+            >
+                Salvar
+            </Button>
+        )}
+        {showSaveAndDeleteButton &&(
+            <Button 
+                variant="outlined"
+                startIcon={<Icon>save</Icon>}
+                onClick={clickButtonSaveAndDelete}
+            >
+                Salvar e voltar
+            </Button>
+        )}
+        {showDeleteButton &&(
+            <Button 
+                variant="outlined"
+                startIcon={<Icon>delete</Icon>}
+                onClick={clickButtonDelete}
+            >
+                Apagar
+            </Button>
+        )}
+        {showNewButton &&(
+            <Button 
+                variant="outlined"
+                startIcon={<Icon>add</Icon>}
+                onClick={clickButtonNew}
+            >
+                {textNewButton}
+            </Button>
+        )}
 
         <Divider variant="middle" orientation="vertical"/>
 
-        <Button 
-            variant="outlined"
-            startIcon={<Icon>arrow_back</Icon>}
-        >
-            Voltar
-        </Button>
+        {showBackButton &&(            
+            <Button 
+                variant="outlined"
+                startIcon={<Icon>arrow_back</Icon>}
+                onClick={clickButtonBack}
+            >
+                Voltar
+            </Button>
+        )}
     </Box>
 
     </div>
