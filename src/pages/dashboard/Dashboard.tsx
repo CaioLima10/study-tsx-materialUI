@@ -8,7 +8,6 @@ export default function Dashboard() {
           toolbar={<DetailTools showSaveAndDeleteButton />}
           
           >
-            
             <span>children</span>
         </BasePageLayout>
   )
