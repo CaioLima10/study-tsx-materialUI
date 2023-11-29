@@ -4,6 +4,9 @@ import { Box,
         Icon, 
         Paper, 
         Skeleton, 
+        Theme, 
+        Typography, 
+        useMediaQuery, 
         useTheme 
     } from "@mui/material";
 import { IDetailToolsProps } from "./types";
@@ -32,7 +35,10 @@ export default function DetailTools({
 
 }: IDetailToolsProps) {
 
+    
     const theme = useTheme()
+    const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
+    const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
 
   return (
     <Box component={Paper}
@@ -44,13 +50,36 @@ export default function DetailTools({
         alignItems="center"
         display="flex"
     >
-        {(showSaveButton && !showSaveButtonLoading) && (
+        {(showSaveButton && !showSaveButtonLoading && !smDown && !mdDown) && (
             <Button 
                 variant="contained"
                 startIcon={<Icon>save</Icon>}
                 onClick={clickButtonSave}
             >
-                Salvar
+                <Typography 
+                    variant="button" 
+                    whiteSpace="nowrap" 
+                    textOverflow="ellipsis" 
+                    overflow="hidden"
+                >
+                    Salvar
+                </Typography>
+            </Button>
+        )|| (
+            <Button 
+            variant="contained"
+            startIcon={<Icon>save</Icon>}
+            onClick={clickButtonSave}
+            fullWidth
+            >
+                <Typography 
+                    variant="button" 
+                    whiteSpace="nowrap" 
+                    textOverflow="ellipsis" 
+                    overflow="hidden"
+                >
+                    Salvar
+                </Typography>
             </Button>
         )}
 
@@ -58,54 +87,122 @@ export default function DetailTools({
             <Skeleton width={110} height={60}/>
         )}
 
-        {(showSaveAndDeleteButton && !showSaveAndDeleteButtonLoading) &&(
+        {(showSaveAndDeleteButton && !showSaveAndDeleteButtonLoading && !smDown && !mdDown) &&(
             <Button 
-            variant="outlined"
-            startIcon={<Icon>save</Icon>}
-            onClick={clickButtonSaveAndDelete}
+                variant="outlined"
+                startIcon={<Icon>save</Icon>}
+                onClick={clickButtonSaveAndDelete}
             >
-                Salvar e voltar
+                <Typography 
+                    variant="button" 
+                    whiteSpace="nowrap" 
+                    textOverflow="ellipsis" 
+                    overflow="hidden"
+                >
+                    Salvar e voltar
+                </Typography>
             </Button>
         )}
-        {showSaveAndDeleteButtonLoading &&(
+
+        {(showSaveAndDeleteButtonLoading && !smDown && !mdDown) &&(
             <Skeleton width={180} height={60}/>
         )}
 
-        {(showDeleteButton && !showDeleteButtonLoading) &&(
+        {(showDeleteButton && !showDeleteButtonLoading && !smDown && !mdDown) &&(
             <Button 
                 variant="outlined"
                 startIcon={<Icon>delete</Icon>}
                 onClick={clickButtonDelete}
             >
+                <Typography 
+                    variant="button" 
+                    whiteSpace="nowrap" 
+                    textOverflow="ellipsis" 
+                    overflow="hidden"
+                >
+                    Apagar
+                </Typography>
+            </Button>
+        )||(
+            <Button 
+            variant="outlined"
+            startIcon={<Icon>delete</Icon>}
+            onClick={clickButtonDelete}
+            fullWidth
+        >
+            <Typography 
+                variant="button" 
+                whiteSpace="nowrap" 
+                textOverflow="ellipsis" 
+                overflow="hidden"
+            >
                 Apagar
+            </Typography>
             </Button>
         )}
-        {showDeleteButtonLoading &&(
+        {(showDeleteButtonLoading) &&(
             <Skeleton width={110} height={60}/>
         )}
 
-        {(showNewButton && showNewButtonLoading) &&(
+        {(showNewButton && !showNewButtonLoading && !smDown ) &&(
             <Button 
                 variant="outlined"
                 startIcon={<Icon>add</Icon>}
                 onClick={clickButtonNew}
             >
-                {textNewButton}
+                <Typography 
+                    variant="button" 
+                    whiteSpace="nowrap" 
+                    textOverflow="ellipsis" 
+                    overflow="hidden"
+                >
+                    {textNewButton}
+                </Typography>
             </Button>
         )}
-        {showNewButtonLoading &&(
+        {(showNewButtonLoading && !smDown && !mdDown) &&(
             <Skeleton width={100} height={60}/>
         )}
 
-        <Divider variant="middle" orientation="vertical"/>
+        { showBackButton && 
+        ( showDeleteButton 
+            || showNewButton 
+            || showSaveAndDeleteButton 
+            || showSaveButton 
+        )&&(
+            <Divider variant="middle" orientation="vertical"/>
+        )}
 
-        {(showBackButton && !showBackButtonLoading) &&(            
+        {(showBackButton && !showBackButtonLoading && !smDown && !mdDown) &&(            
             <Button 
                 variant="outlined"
                 startIcon={<Icon>arrow_back</Icon>}
                 onClick={clickButtonBack}
             >
-                Voltar
+                <Typography 
+                    variant="button" 
+                    whiteSpace="nowrap" 
+                    textOverflow="ellipsis" 
+                    overflow="hidden"
+                >
+                    Voltar
+                </Typography>
+            </Button>
+        )||(
+            <Button 
+            variant="outlined"
+            startIcon={<Icon>arrow_back</Icon>}
+            onClick={clickButtonBack}
+            fullWidth
+            >
+                <Typography 
+                    variant="button" 
+                    whiteSpace="nowrap" 
+                    textOverflow="ellipsis" 
+                    overflow="hidden"
+                >
+                    Voltar
+                </Typography>
             </Button>
         )}
 
