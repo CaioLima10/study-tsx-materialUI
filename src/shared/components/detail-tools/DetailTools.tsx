@@ -5,23 +5,8 @@ import { Box,
         Paper, 
         useTheme 
     } from "@mui/material";
+import { IDetailToolsProps } from "./types";
 
-interface IDetailToolsProps{
-    textNewButton?: string
-
-    showNewButton?: boolean
-    showBackButton?: boolean
-    showDeleteButton?: boolean
-    showSaveButton?: boolean
-    showSaveAndDeleteButton?: boolean
-
-    clickButtonNew?: () => void
-    clickButtonBack?: () => void
-    clickButtonDelete?: () => void
-    clickButtonSave?: () => void
-    clickButtonSaveAndDelete?: () => void
-
-}
 
 export default function DetailTools({
     textNewButton = "Novo",
@@ -43,7 +28,6 @@ export default function DetailTools({
     const theme = useTheme()
 
   return (
-    <div>
     <Box component={Paper}
         gap={1}
         padding={1}
@@ -102,7 +86,5 @@ export default function DetailTools({
             </Button>
         )}
     </Box>
-
-    </div>
   )
 }
