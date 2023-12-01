@@ -3,7 +3,7 @@ import AuthContextDrawer from "../context/AuthDrawer";
 
 interface IBasePageLayoutProps{
     title: string
-    children: JSX.Element
+    children?: JSX.Element
     toolbar?: React.ReactNode
 }
 
@@ -14,7 +14,6 @@ export default function BasePageLayout({ title , children , toolbar }: IBasePage
     const theme = useTheme()
 
     const { toggleDrawerOpen } = AuthContextDrawer()
-
 
   return (
     <Box height="100%" display="flex" flexDirection="column" gap={1}>    
