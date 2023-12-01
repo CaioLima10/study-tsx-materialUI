@@ -9,12 +9,12 @@ interface IListUser{
     cidadeId: number
 }
 
-/*interface IDetailUser{
+interface IDetailUser{
     id: number
     nameCompleted: string
     email: string
     cidadeId: number
-}*/
+}
 
 type TUserTotalCount = {
     data: IListUser[]
@@ -23,7 +23,11 @@ type TUserTotalCount = {
 
 const getAll = async (page = 1 , filter = ''): Promise<TUserTotalCount | Error> => {
     try {
-        const urlResponse = `/users?_page=${page}&_limit=${Environment.LINE_LIMIT}&nameCompleted_like=${filter}`
+        const urlResponse = 
+        `/users?_page=${page}
+        &_limit=${Environment.LINE_LIMIT}
+        &nameCompleted_like=${filter}
+        `
 
         const { data , headers } = await Api.get(urlResponse)
 
@@ -44,7 +48,25 @@ const getAll = async (page = 1 , filter = ''): Promise<TUserTotalCount | Error> 
     }
 }
 
+const getbyId = async (id: number): Promise<IDetailUser | Error> => {
+    try {
+        const { data  } = await Api.get(`users/${id}`)
+
+        if(data){
+            return data
+        }
+        return new Error('error ao consultar registro.')
+
+    } catch (error) {
+        console.error(error)
+        return new Error((error as { message: string }).message 
+        || 'error ao consultar registro.')
+        
+    }
+}
+
 
 export const UsersServices = {
-    getAll
+    getAll,
+    getbyId
 }
