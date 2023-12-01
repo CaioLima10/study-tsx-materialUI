@@ -50,7 +50,7 @@ const getAll = async (page = 1 , filter = ''): Promise<TUserTotalCount | Error> 
 
 const getbyId = async (id: number): Promise<IDetailUser | Error> => {
     try {
-        const { data  } = await Api.get(`users/${id}`)
+        const { data  } = await Api.get(`/users/${id}`)
 
         if(data){
             return data
@@ -67,7 +67,7 @@ const getbyId = async (id: number): Promise<IDetailUser | Error> => {
 
 const create = async ( values: Omit<IDetailUser , 'id'> ): Promise<number | Error> => {
     try {
-        const { data } = await Api.post('/users' , values)
+        const { data } = await Api.post<IDetailUser>('/users' , values)
 
         if(data){
             return data.id
@@ -81,8 +81,21 @@ const create = async ( values: Omit<IDetailUser , 'id'> ): Promise<number | Erro
         
     }
 }
+
+const updateById = async (id: number , values: IDetailUser ): Promise<void | Error> => {
+    try {
+        await Api.put(`/users/${id}` , values)
+
+    } catch (error) {
+        console.error(error)
+        return new Error((error as {message: string}).message || 'erro ao atualizar o registro')
+        
+    }
+}
+
 export const UsersServices = {
     getAll,
     getbyId,
-    create
+    create,
+    updateById
 }
