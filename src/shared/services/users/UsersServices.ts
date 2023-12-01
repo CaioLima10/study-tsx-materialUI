@@ -65,8 +65,24 @@ const getbyId = async (id: number): Promise<IDetailUser | Error> => {
     }
 }
 
+const create = async ( values: Omit<IDetailUser , 'id'> ): Promise<number | Error> => {
+    try {
+        const { data } = await Api.post('/users' , values)
 
+        if(data){
+            return data.id
+        }
+
+        return new Error('error ao criar o registro')
+        
+    } catch (error) {
+        console.error(error)
+        return new Error((error as {message: string}).message || 'error ao criar o registro')
+        
+    }
+}
 export const UsersServices = {
     getAll,
-    getbyId
+    getbyId,
+    create
 }
