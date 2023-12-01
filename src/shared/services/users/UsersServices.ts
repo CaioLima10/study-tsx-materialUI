@@ -77,7 +77,8 @@ const create = async ( values: Omit<IDetailUser , 'id'> ): Promise<number | Erro
         
     } catch (error) {
         console.error(error)
-        return new Error((error as {message: string}).message || 'error ao criar o registro')
+        return new Error((error as {message: string}).message 
+        || 'error ao criar o registro')
         
     }
 }
@@ -88,8 +89,19 @@ const updateById = async (id: number , values: IDetailUser ): Promise<void | Err
 
     } catch (error) {
         console.error(error)
-        return new Error((error as {message: string}).message || 'erro ao atualizar o registro')
+        return new Error((error as {message: string}).message 
+        || 'erro ao atualizar o registro')
         
+    }
+}
+
+const deleteById = async (id: number): Promise<void | Error> => {
+    try {
+        await Api.delete(`/users/${id}`)
+    } catch (error) {
+        console.error(error)
+    return new Error((error as { message: string }).message 
+    || 'error ao deletar o registro')
     }
 }
 
@@ -97,5 +109,6 @@ export const UsersServices = {
     getAll,
     getbyId,
     create,
-    updateById
+    updateById,
+    deleteById
 }
