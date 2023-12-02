@@ -2,7 +2,7 @@ import {Navigate, Route, Routes } from "react-router-dom";
 import Dashboard from "../pages/dashboard/Dashboard";
 import AuthContextDrawer from "../shared/context/AuthDrawer";
 import { useEffect } from "react";
-import ListOfCities from "../pages/cities/ListOfCities";
+import ListOfUsers from "../pages/users/ListOfUsers";
 
 export default function AppRoutes() {
 
@@ -16,9 +16,9 @@ export default function AppRoutes() {
           label: 'Pagina inicial'
         },    
         {
-          icon: 'location_city',
-          path: '/cidades',
-          label: 'Cidades'
+          icon: 'people',
+          path: '/pessoas',
+          label: 'Pessoas'
         },    
       ])
     }, [setDrawerOptions])
@@ -26,7 +26,7 @@ export default function AppRoutes() {
   return (
         <Routes>
             <Route path="/pagina-inicial" element={<Dashboard/>}/>
-            <Route path="/cidades" element={<ListOfCities/>}/>
+            <Route path="/pessoas" element={<ListOfUsers/>}/>
             <Route path="*" element={<Navigate to={"/pagina-inicial"} />}/>
         </Routes>
   )
