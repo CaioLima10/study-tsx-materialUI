@@ -1,3 +1,10 @@
 {
-    "users": []
+    "users": [
+        {
+            "id": 1,
+            "nameCompleted": "Caio lima de souza",
+            "email": "Caiohenrys50@gmail.com",
+            "cidadeId": 2 
+        }
+    ]
 }
