@@ -4,7 +4,7 @@ import BasePageLayout from "../../shared/layout/BasePageLayout";
 import { useEffect, useMemo, useState } from "react";
 import { IListUser, UsersServices } from "../../shared/services/users/UsersServices";
 import { useDebounce } from "../../shared/hooks/UseDebounce";
-import {  Paper, Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, useTheme } from "@mui/material";
+import {  Pagination, Paper, Skeleton, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow, Typography, useTheme } from "@mui/material";
 import { Environment } from "../../shared/environment";
 
 export default function ListOfUsers() {
@@ -23,10 +23,14 @@ export default function ListOfUsers() {
         return searchParams.get("buscar") || ""
     },[searchParams])
 
+    const pages = useMemo(() => {
+        return Number(searchParams.get("pagina") || "0")
+    },[searchParams])
+
     useEffect(() => {
       setIsLoading(true)
         debounce(() => {
-        UsersServices.getAll(1 , search)
+        UsersServices.getAll( pages , search)
         .then((result) => {
           if(result instanceof Error){
             alert(result.message)
@@ -40,7 +44,7 @@ export default function ListOfUsers() {
           setTotalCount(result.totalCount)
         })
       })
-    },[debounce , search])
+    },[debounce , search , pages])
         
   return (
     <BasePageLayout 
@@ -50,7 +54,7 @@ export default function ListOfUsers() {
             showInputSearch={true}
             textNewButton="nova"
             searchText={search}
-            changingSearchText={text => setSearchParams({ buscar: text })}
+            changingSearchText={text => setSearchParams({ buscar: text, pages: '1' }, { replace: true })}
             
 
             />}
@@ -72,8 +76,13 @@ export default function ListOfUsers() {
                 { rows.map(row => (
                   <TableRow key={row.id}>
                     { isLoading && (
-                      <TableCell colSpan={3}>
-                        <Skeleton sx={{ height: '25px' }}/>
+                      <TableCell  colSpan={3}>
+                        <Typography 
+                          variant="h6" 
+                          sx={{ margin: '-6px 0' }}
+                        >
+                          <Skeleton/>
+                        </Typography>
                       </TableCell>
                     )||(
                       <>
@@ -100,6 +109,26 @@ export default function ListOfUsers() {
             </TableBody>
             
           </Table>
+                {(totalCount > 0 && totalCount > Environment.LINE_LIMIT) && (
+                  <TableFooter 
+                    sx={{ display: "flex",
+                          alignItems: "center", 
+                          justifyContent: "center", 
+                          padding: "20px"
+                          }}
+                        >
+                    <Pagination 
+                      color="secondary"
+                      variant="outlined"
+                      page={pages}
+                      count={Math.ceil(totalCount / Environment.LINE_LIMIT)} 
+                      onChange={(_, newPage) => 
+                        setSearchParams({ buscar: search , 
+                                          pagina: newPage.toString() }, 
+                        { replace: true })}
+                    />
+                  </TableFooter>
+                )}  
       </TableContainer>
     </BasePageLayout>
   )
