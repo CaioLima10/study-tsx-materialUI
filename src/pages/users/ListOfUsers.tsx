@@ -1,10 +1,26 @@
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ListingTools from "../../shared/components/listing-tools/ListingTools";
 import BasePageLayout from "../../shared/layout/BasePageLayout";
 import { useEffect, useMemo, useState } from "react";
 import { IListUser, UsersServices } from "../../shared/services/users/UsersServices";
 import { useDebounce } from "../../shared/hooks/UseDebounce";
-import {  Pagination, Paper, Skeleton, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow, Typography, useTheme } from "@mui/material";
+
+import {  Icon, 
+          IconButton, 
+          Pagination, 
+          Paper, 
+          Skeleton, 
+          Table, 
+          TableBody, 
+          TableCell, 
+          TableContainer, 
+          TableFooter, 
+          TableHead, 
+          TableRow, 
+          Typography, 
+          useTheme 
+        } from "@mui/material";
+
 import { Environment } from "../../shared/environment";
 
 export default function ListOfUsers() {
@@ -15,6 +31,8 @@ export default function ListOfUsers() {
     const [ rows , setRows ] = useState<IListUser[]>([])
     const [ totalCount , setTotalCount ] = useState(0)
     const [ isLoading , setIsLoading ] = useState(false)
+
+    const navigate = useNavigate()
 
     const theme = useTheme()
     
@@ -45,6 +63,20 @@ export default function ListOfUsers() {
         })
       })
     },[debounce , search , pages])
+
+    const handleDelete = (id: number) => {
+      if(confirm('Realmente deseja apagar!')){
+        UsersServices.deleteById(id)
+          .then(result => {
+            if(result instanceof Error){
+              alert(result.message)
+            }
+            setRows(oldRows =>{
+              return [...oldRows.filter(oldRow => oldRow.id !== id)]
+            })
+          })
+      }
+    }
         
   return (
     <BasePageLayout 
@@ -54,9 +86,9 @@ export default function ListOfUsers() {
             showInputSearch={true}
             textNewButton="nova"
             searchText={search}
-            changingSearchText={text => setSearchParams({ buscar: text, pages: '1' }, { replace: true })}
-            
-
+            changingSearchText={text => 
+              setSearchParams({ buscar: text, pages: '1' },
+              { replace: true })}
             />}
     >
       <TableContainer 
@@ -78,15 +110,28 @@ export default function ListOfUsers() {
                     { isLoading && (
                       <TableCell  colSpan={3}>
                         <Typography 
-                          variant="h6" 
-                          sx={{ margin: '-6px 0' }}
+                          variant="h4" 
+                          sx={{ margin: '-4px 0' }}
                         >
                           <Skeleton/>
                         </Typography>
                       </TableCell>
                     )||(
                       <>
-                        <TableCell>{row.cidadeId}</TableCell>
+                        <TableCell>
+                          <IconButton 
+                            size="small"  
+                            onClick={() => handleDelete(row.id)}
+                          >
+                            <Icon >delete</Icon>
+                          </IconButton>
+                          <IconButton 
+                            size="small"
+                            onClick={() => navigate(`user/detalhe/${row.id}`)}
+                            >
+                            <Icon>edit</Icon>
+                          </IconButton>     
+                        </TableCell>
                         <TableCell>{row.nameCompleted}</TableCell>
                         <TableCell>{row.email}</TableCell>
                       </>

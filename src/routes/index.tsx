@@ -27,6 +27,7 @@ export default function AppRoutes() {
         <Routes>
             <Route path="/pagina-inicial" element={<Dashboard/>}/>
             <Route path="/pessoas" element={<ListOfUsers/>}/>
+            <Route path="/pessoas/detalhe/:id" element={<p>editar agora</p>}/>
             <Route path="*" element={<Navigate to={"/pagina-inicial"} />}/>
         </Routes>
   )

@@ -1,76 +1,34 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "nameCompleted": "Caio lima de souza",
-            "email": "Caiohenrys50@gmail.com",
-            "cidadeId": 2 
-        },
-        {
-            "id": 2,
-            "nameCompleted": "lucas lima de souza",
-            "email": "Caiohenrys50@gmail.com",
-            "cidadeId": 2 
-        },
-        {
-            "id": 3,
-            "nameCompleted": "roberto lima de souza",
-            "email": "Caiohenrys50@gmail.com",
-            "cidadeId": 2 
-        },
-        {
-            "id": 4,
-            "nameCompleted": "gael lima de souza",
-            "email": "Caiohenrys50@gmail.com",
-            "cidadeId": 2 
-        },
-        {
-            "id": 5,
-            "nameCompleted": "Caio lima de souza",
-            "email": "Caiohenrys50@gmail.com",
-            "cidadeId": 2 
-        },
-        {
-            "id": 6,
-            "nameCompleted": "lucas lima de souza",
-            "email": "Caiohenrys50@gmail.com",
-            "cidadeId": 2 
-        },
-        {
-            "id": 7,
-            "nameCompleted": "roberto lima de souza",
-            "email": "Caiohenrys50@gmail.com",
-            "cidadeId": 2 
-        },
-        {
-            "id": 8,
-            "nameCompleted": "gael lima de souza",
-            "email": "Caiohenrys50@gmail.com",
-            "cidadeId": 2 
-        },
-        {
-            "id": 9,
-            "nameCompleted": "Caio lima de souza",
-            "email": "Caiohenrys50@gmail.com",
-            "cidadeId": 2 
-        },
-        {
-            "id": 10,
-            "nameCompleted": "lucas lima de souza",
-            "email": "Caiohenrys50@gmail.com",
-            "cidadeId": 2 
-        },
-        {
-            "id": 11,
-            "nameCompleted": "roberto lima de souza",
-            "email": "Caiohenrys5csdcdscl.com",
-            "cidadeId": 2 
-        },
-        {
-            "id": 12,
-            "nameCompleted": "gael lima de souza",
-            "email": "Caiohenrys50@gmail.com",
-            "cidadeId": 2 
-        }
-    ]
+  "users": [
+    {
+      "id": 1,
+      "nameCompleted": "Caio lima de souza",
+      "email": "Caiohenrys50@gmail.com",
+      "cidadeId": 2
+    },
+    {
+      "id": 2,
+      "nameCompleted": "lucas lima de souza",
+      "email": "Caiohenrys50@gmail.com",
+      "cidadeId": 2
+    },
+    {
+      "id": 3,
+      "nameCompleted": "roberto lima de souza",
+      "email": "Caiohenrys50@gmail.com",
+      "cidadeId": 2
+    },
+    {
+      "id": 4,
+      "nameCompleted": "gael lima de souza",
+      "email": "Caiohenrys50@gmail.com",
+      "cidadeId": 2
+    },
+    {
+      "id": 7,
+      "nameCompleted": "roberto lima de souza",
+      "email": "Caiohenrys50@gmail.com",
+      "cidadeId": 2
+    }
+  ]
 }
