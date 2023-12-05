@@ -86,6 +86,7 @@ export default function ListOfUsers() {
             showInputSearch={true}
             textNewButton="nova"
             searchText={search}
+            isNewClick={() => navigate("/pessoas/detalhe/nova")}
             changingSearchText={text => 
               setSearchParams({ buscar: text, pages: '1' },
               { replace: true })}
@@ -127,7 +128,7 @@ export default function ListOfUsers() {
                           </IconButton>
                           <IconButton 
                             size="small"
-                            onClick={() => navigate(`user/detalhe/${row.id}`)}
+                            onClick={() => navigate(`/pessoas/detalhe/${row.id}`)}
                             >
                             <Icon>edit</Icon>
                           </IconButton>     

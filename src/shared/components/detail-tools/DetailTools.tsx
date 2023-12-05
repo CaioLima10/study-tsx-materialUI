@@ -108,7 +108,7 @@ export default function DetailTools({
             <Skeleton width={180} height={60}/>
         )}
 
-        {(showDeleteButton && !showDeleteButtonLoading && !smDown && !mdDown) &&(
+        {(showDeleteButton && !showDeleteButtonLoading && !smDown ) &&(
             <Button 
                 variant="outlined"
                 startIcon={<Icon>delete</Icon>}
@@ -122,22 +122,6 @@ export default function DetailTools({
                 >
                     Apagar
                 </Typography>
-            </Button>
-        )||(
-            <Button 
-            variant="outlined"
-            startIcon={<Icon>delete</Icon>}
-            onClick={clickButtonDelete}
-            fullWidth
-        >
-            <Typography 
-                variant="button" 
-                whiteSpace="nowrap" 
-                textOverflow="ellipsis" 
-                overflow="hidden"
-            >
-                Apagar
-            </Typography>
             </Button>
         )}
         {(showDeleteButtonLoading) &&(

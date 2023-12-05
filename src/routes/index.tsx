@@ -3,6 +3,7 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import AuthContextDrawer from "../shared/context/AuthDrawer";
 import { useEffect } from "react";
 import ListOfUsers from "../pages/users/ListOfUsers";
+import { UserMembers } from "../pages/users/UserMembers";
 
 export default function AppRoutes() {
 
@@ -27,7 +28,7 @@ export default function AppRoutes() {
         <Routes>
             <Route path="/pagina-inicial" element={<Dashboard/>}/>
             <Route path="/pessoas" element={<ListOfUsers/>}/>
-            <Route path="/pessoas/detalhe/:id" element={<p>editar agora</p>}/>
+            <Route path="/pessoas/detalhe/:id" element={<UserMembers/>}/>
             <Route path="*" element={<Navigate to={"/pagina-inicial"} />}/>
         </Routes>
   )

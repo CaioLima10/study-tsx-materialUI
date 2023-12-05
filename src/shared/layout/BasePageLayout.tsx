@@ -3,7 +3,7 @@ import AuthContextDrawer from "../context/AuthDrawer";
 
 interface IBasePageLayoutProps{
     title: string
-    children?: JSX.Element
+    children?: JSX.Element | React.ReactNode
     toolbar?: React.ReactNode
 }
 
