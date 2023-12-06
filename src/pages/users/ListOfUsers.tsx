@@ -42,7 +42,7 @@ export default function ListOfUsers() {
     },[searchParams])
 
     const pages = useMemo(() => {
-        return Number(searchParams.get("pagina") || "0")
+        return Number(searchParams.get("pagina") || "1")
     },[searchParams])
 
     useEffect(() => {
@@ -67,7 +67,8 @@ export default function ListOfUsers() {
     const handleDelete = (id: number) => {
       if(confirm('Realmente deseja apagar!')){
         UsersServices.deleteById(id)
-          .then(result => {
+        .then(result => {
+            setIsLoading(false)
             if(result instanceof Error){
               alert(result.message)
             }
