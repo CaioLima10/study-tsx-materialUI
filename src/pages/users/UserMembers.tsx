@@ -6,7 +6,7 @@ import { UsersServices } from "../../shared/services/users/UsersServices";
 import { Form } from "@unform/web";
 import UnTextField from "../../shared/components/forms/UnTextField";
 import { FormHandles } from "@unform/core";
-import { LinearProgress } from "@mui/material";
+import { Box, Grid, LinearProgress, Paper, Typography } from "@mui/material";
 
 
 interface IFormData{
@@ -16,6 +16,8 @@ interface IFormData{
 }
 
 export function UserMembers(){
+
+
 
     const { id = "nova" } = useParams<'id'>()
     const navigate = useNavigate()
@@ -106,21 +108,65 @@ export function UserMembers(){
 
             >
             </DetailTools>
-                <Form ref={formRef} onSubmit={handleSave}>
-            {(isLoading && <LinearProgress/>)}
-                    <UnTextField 
-                        placeholder="Nome Completo"
-                        name="nameCompleted"
+                <Form 
+                    ref={formRef} 
+                    onSubmit={handleSave}>
+                <Box 
+                    display="flex"
+                    flexDirection="column"
+                    margin={1} 
+                    component={Paper}
+                    variant="outlined"
+                >
+                    <Grid item>
+                        {isLoading && (<LinearProgress/>)}
+                    <Grid 
+                        container 
+                        display="flex"
+                        gap={2}
+                        padding={2} 
+                    
+                    >
+                        {id === 'nova' ?(
+                            <Typography variant="h6">Novo Membro</Typography>
+                            ):(
+                            <Typography variant="h6">Editar</Typography>
+                        )}
+                        <Grid container item direction="row" spacing={2}>    
+                            <Grid item xs={16} sm={12} md={6} >
+                                <UnTextField 
+                                    fullWidth
+                                    name="nameCompleted"
+                                    label="Nome Completo"  
+                                    disabled={isLoading}
+                                />
+                            </Grid>
+                        </Grid>
 
-                    />
-                    <UnTextField 
-                        placeholder="Email"
-                        name="email"
-                    />
-                    <UnTextField
-                        placeholder="CidadeId"
-                        name="cidadeId"
-                    />
+                        <Grid container item  direction="row" spacing={2}>    
+                            <Grid item xs={16} sm={12} md={6}>
+                                <UnTextField
+                                    fullWidth 
+                                    name="email"
+                                    label="Email"
+                                    disabled={isLoading}
+                                />
+                            </Grid>
+                        </Grid>
+   
+                        <Grid container item  direction="row" spacing={2}>    
+                            <Grid item xs={16} sm={12} md={6}> 
+                                <UnTextField 
+                                    fullWidth
+                                    name="cidadeId"
+                                    label="Cidade"
+                                    disabled={isLoading}
+                                />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                </Box>
                 </Form>
         </BasePageLayout>
     )   
