@@ -31,7 +31,7 @@ export default function DetailTools({
     clickButtonBack,
     clickButtonDelete,
     clickButtonSave,
-    clickButtonSaveAndDelete
+    clickButtonSaveAndClose
 
 }: IDetailToolsProps) {
 
@@ -91,7 +91,7 @@ export default function DetailTools({
             <Button 
                 variant="outlined"
                 startIcon={<Icon>save</Icon>}
-                onClick={clickButtonSaveAndDelete}
+                onClick={clickButtonSaveAndClose}
             >
                 <Typography 
                     variant="button" 

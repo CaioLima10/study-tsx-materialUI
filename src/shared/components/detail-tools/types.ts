@@ -17,5 +17,5 @@ export interface IDetailToolsProps{
     clickButtonBack?: () => void
     clickButtonDelete?: () => void
     clickButtonSave?: () => void
-    clickButtonSaveAndDelete?: () => void
+    clickButtonSaveAndClose?: () => void
 }

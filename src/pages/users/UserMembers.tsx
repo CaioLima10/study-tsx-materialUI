@@ -1,12 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
 import DetailTools from "../../shared/components/detail-tools/DetailTools";
 import BasePageLayout from "../../shared/layout/BasePageLayout";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { UsersServices } from "../../shared/services/users/UsersServices";
 import { Form } from "@unform/web";
 import UnTextField from "../../shared/components/forms/UnTextField";
-import { FormHandles } from "@unform/core";
 import { Box, Grid, LinearProgress, Paper, Typography } from "@mui/material";
+import useUnForm from "../../shared/components/forms/useUnForm";
 
 
 interface IFormData{
@@ -21,7 +21,7 @@ export function UserMembers(){
 
     const { id = "nova" } = useParams<'id'>()
     const navigate = useNavigate()
-    const formRef = useRef<FormHandles>(null)
+    const { formRef , save , saveAndClose , isSaveAndClose} = useUnForm()
 
     const [ name , setName ] = useState("")
     const [ isLoading , setIsLoading ] = useState(false)
@@ -36,17 +36,23 @@ export function UserMembers(){
                         alert(result.message)
                         navigate("/pessoas")
                     }else{
-                        setTimeout(() => {
-                            setIsLoading(false)
-                        }, 2000)
-                        setName(result.nameCompleted)
-                        console.log({result})
-
-                        formRef.current?.setData(result)
+                        if(result){
+                            setTimeout(() => {
+                                setIsLoading(false)
+                            }, 2000)
+                            setName(result.nameCompleted)
+                            formRef.current?.setData(result)
+                        }
                     }
                 })
+        }else {
+            formRef.current?.setData({
+                nameCompleted: "",
+                email: "",
+                cidadeId: ""
+            })
         }
-    }, [id , navigate])
+    }, [id , navigate , formRef])
 
     const handleSave = useCallback((data: IFormData) => {
         setIsLoading(true)
@@ -57,7 +63,11 @@ export function UserMembers(){
                     if(result instanceof Error){
                         alert(result.message)
                     }else{
-                        navigate(`/pessoas/detalhe/${result}`)
+                        if(isSaveAndClose()){
+                            navigate('/pessoas')    
+                        }else{
+                            navigate(`/pessoas/detalhe/${result}`)
+                        }
                     }
                 })
         }else{
@@ -69,13 +79,14 @@ export function UserMembers(){
                 }else{
                     if(data && 'nameCompleted' in data){
                         setName(data.nameCompleted)
+                    }if( isSaveAndClose()){
+                        navigate('/pessoas')
                     }
                 }
             })
-            
         }
         
-    }, [id , navigate])
+    }, [id , navigate , isSaveAndClose])
 
     const handleDelete = (id: number) => {
         if(confirm("Realmente deseja apagar!")){
@@ -103,8 +114,8 @@ export function UserMembers(){
                 clickButtonNew={() => navigate('/pessoas/detalhe/nova')}
                 clickButtonBack={() => navigate('/pessoas')}
                 clickButtonDelete={() => handleDelete(Number(id))}
-                clickButtonSaveAndDelete={() => formRef.current?.submitForm()}
-                clickButtonSave={() => formRef.current?.submitForm()}
+                clickButtonSaveAndClose={saveAndClose}
+                clickButtonSave={save}
 
             >
             </DetailTools>
