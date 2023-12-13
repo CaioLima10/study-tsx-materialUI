@@ -7,6 +7,8 @@ import { Form } from "@unform/web";
 import UnTextField from "../../shared/components/forms/UnTextField";
 import { Box, Grid, LinearProgress, Paper, Typography } from "@mui/material";
 import useUnForm from "../../shared/components/forms/useUnForm";
+import * as yup from "yup"
+import { IKeyValidate } from "../../shared/components/forms/types";
 
 
 interface IFormData{
@@ -15,9 +17,13 @@ interface IFormData{
     cidadeId: number
 }
 
+const formValidationSchema: yup.Schema<IFormData> = yup.object().shape({
+     nameCompleted: yup.string().required().min(3),
+     email: yup.string().required().email(),
+     cidadeId: yup.number().required()
+}) 
+
 export function UserMembers(){
-
-
 
     const { id = "nova" } = useParams<'id'>()
     const navigate = useNavigate()
@@ -55,38 +61,52 @@ export function UserMembers(){
     }, [id , navigate , formRef])
 
     const handleSave = useCallback((data: IFormData) => {
-        setIsLoading(true)
-        if(id === "nova"){
-            UsersServices.create(data)
-                .then((result) => {
-                    setIsLoading(false)
-                    if(result instanceof Error){
-                        alert(result.message)
+        formValidationSchema.
+            validate(data, { abortEarly: false })
+                .then((dataValidate) => {
+                    setIsLoading(true)
+                    if(id === "nova"){
+                        UsersServices.create(dataValidate)
+                            .then((result) => {
+                                setIsLoading(false)
+                                if(result instanceof Error){
+                                    alert(result.message)
+                                }else{
+                                    if(isSaveAndClose()){
+                                        navigate('/pessoas')    
+                                    }else{
+                                        navigate(`/pessoas/detalhe/${result}`)
+                                    }
+                                }
+                            })
                     }else{
-                        if(isSaveAndClose()){
-                            navigate('/pessoas')    
-                        }else{
-                            navigate(`/pessoas/detalhe/${result}`)
-                        }
+                        UsersServices.updateById(Number(id) , {id: Number(id) , ...dataValidate})
+                        .then((result) => {
+                            setIsLoading(false)
+                            if(result instanceof Error){
+                                alert(result.message)
+                            }else{
+                                if(dataValidate && 'nameCompleted' in dataValidate){
+                                    setName(dataValidate.nameCompleted)
+                                }if( isSaveAndClose()){
+                                    navigate('/pessoas')
+                                }
+                            }
+                        })
                     }
+                }).catch((errors: yup.ValidationError) => {
+
+                    const validationErrors: IKeyValidate = {}
+                                
+                    errors.inner.forEach((error) => {
+                        if(!error.path) return
+
+                        validationErrors[error.path] = error.message
+                    })
+                    formRef.current?.setErrors(validationErrors)
                 })
-        }else{
-            UsersServices.updateById(Number(id) , {id: Number(id) , ...data})
-            .then((result) => {
-                setIsLoading(false)
-                if(result instanceof Error){
-                    alert(result.message)
-                }else{
-                    if(data && 'nameCompleted' in data){
-                        setName(data.nameCompleted)
-                    }if( isSaveAndClose()){
-                        navigate('/pessoas')
-                    }
-                }
-            })
-        }
         
-    }, [id , navigate , isSaveAndClose])
+    }, [id , navigate , isSaveAndClose , formRef])
 
     const handleDelete = (id: number) => {
         if(confirm("Realmente deseja apagar!")){

@@ -1,12 +1,6 @@
 {
   "users": [
     {
-      "id": 1,
-      "nameCompleted": "Caio ",
-      "email": "caiohenrys50@gmail.com",
-      "cidadeId": "20"
-    },
-    {
       "id": 2,
       "nameCompleted": "Gael",
       "email": "cdcdc",

@@ -1,3 +1,4 @@
+import './shared/components/forms/traductorYup'
 import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes";
 import AppThemeProvider from "./shared/context/ThemeContext";
