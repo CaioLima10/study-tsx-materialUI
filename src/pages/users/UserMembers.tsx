@@ -18,9 +18,9 @@ interface IFormData{
 }
 
 const formValidationSchema: yup.Schema<IFormData> = yup.object().shape({
-     nameCompleted: yup.string().required().min(3),
-     email: yup.string().required().email(),
-     cidadeId: yup.number().required()
+    nameCompleted: yup.string().required().min(3),
+    email: yup.string().required().email(),
+    cidadeId: yup.number().required()
 }) 
 
 export function UserMembers(){
@@ -100,7 +100,6 @@ export function UserMembers(){
                                 
                     errors.inner.forEach((error) => {
                         if(!error.path) return
-
                         validationErrors[error.path] = error.message
                     })
                     formRef.current?.setErrors(validationErrors)
