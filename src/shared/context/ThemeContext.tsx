@@ -7,9 +7,13 @@ interface IThemeContextData{
     toggleTheme: () => void
 }
 
+interface IThemeProvider {
+    children: JSX.Element
+}
+
 export const ThemeContext = createContext({} as IThemeContextData)
     
-export default function AppThemeProvider({children}){
+export default function AppThemeProvider({ children }: IThemeProvider){
 
     const [ themeName , setThemeName ] = useState<'light' | 'dark'>('light')
 

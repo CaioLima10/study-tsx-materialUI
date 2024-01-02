@@ -6,6 +6,10 @@ interface IDrawerOptions{
     icon: string
 }
 
+interface IDrawerProvider {
+    children: JSX.Element
+}
+
 interface IDrawerContext {
     isDrawerOpen: boolean
     toggleDrawerOpen: () => void
@@ -15,7 +19,7 @@ interface IDrawerContext {
 
 export const DrawerContext = createContext({} as IDrawerContext)
 
-export default function DrawerProvider({ children }){
+export default function DrawerProvider({ children } : IDrawerProvider){
 
     const [ isDrawerOpen , setIsDrawerOpen ] = useState(false)
     const [ drawerOptions , setDrawerOptions ] = useState<IDrawerOptions[]>([])

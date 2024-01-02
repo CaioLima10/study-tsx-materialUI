@@ -1,27 +1,28 @@
 import { Box, Button, Icon, Paper, TextField, useTheme } from "@mui/material";
 
 import { Environment } from "../../environment";
+import { forwardRef } from "react";
 
 interface IListingToolsProps{
     searchText?: string
     showInputSearch?: boolean
     changingSearchText?: ( newText: string ) => void
+    isClickPDF?: () => void
 
     textNewButton?: string
     showNewButton?:  boolean
     isNewClick?: () => void
-
 }
 
-export default function ListingTools({
+export default forwardRef(function ListingTools({
     searchText = '',
     showInputSearch = false, 
     changingSearchText,
     textNewButton = 'novo',
     showNewButton = false,
-    isNewClick
-}
-    : IListingToolsProps) {
+    isNewClick,
+    isClickPDF,
+}: IListingToolsProps ) {
 
     const theme = useTheme()
 
@@ -39,6 +40,7 @@ export default function ListingTools({
         {showInputSearch && (
             <TextField 
                 size="small"
+                sx={{ width: '75ch' }}
                 placeholder={Environment.INPUT_SEARCH}
                 value={searchText}
                 onChange={(event) => changingSearchText?.(event.target.value)}    
@@ -46,9 +48,15 @@ export default function ListingTools({
         )}
         <Box 
             flex={1} 
+            gap={1}
             display={"flex"} 
             justifyContent={"end"}
         >
+            <Button variant="contained" color="success"
+                onClick={isClickPDF}
+            >
+                Relatorio PDF
+            </Button>
             {(showNewButton &&               
                 <Button 
                     variant="contained"
@@ -61,4 +69,4 @@ export default function ListingTools({
         </Box>
     </Box>
   )
-}
+})

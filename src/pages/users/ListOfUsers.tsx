@@ -1,7 +1,7 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import ListingTools from "../../shared/components/listing-tools/ListingTools";
 import BasePageLayout from "../../shared/layout/BasePageLayout";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { IListUser, UsersServices } from "../../shared/services/users/UsersServices";
 import { useDebounce } from "../../shared/hooks/UseDebounce";
 
@@ -22,6 +22,8 @@ import {  Icon,
         } from "@mui/material";
 
 import { Environment } from "../../shared/environment";
+import { useReactToPrint } from "react-to-print";
+
 
 export default function ListOfUsers() {
 
@@ -31,12 +33,16 @@ export default function ListOfUsers() {
     const [ rows , setRows ] = useState<IListUser[]>([])
     const [ totalCount , setTotalCount ] = useState(0)
     const [ isLoading , setIsLoading ] = useState(false)
+    const contentDocumentRef = useRef<HTMLDivElement>(null)
+
+    const handlePrint = useReactToPrint({
+      content: () => contentDocumentRef.current ,
+    })
 
     const navigate = useNavigate()
 
     const theme = useTheme()
     
-
     const search = useMemo(() => {
         return searchParams.get("buscar") || ""
     },[searchParams])
@@ -57,7 +63,6 @@ export default function ListOfUsers() {
           setTimeout(() => {
             setIsLoading(false)
           },2000)
-          console.log(result)
           setRows(result.data)
           setTotalCount(result.totalCount)
         })
@@ -81,19 +86,20 @@ export default function ListOfUsers() {
         
   return (
     <BasePageLayout 
-        title="Listagem de Pessoas"
         toolbar={<ListingTools  
             showNewButton
             showInputSearch={true}
             textNewButton="nova"
             searchText={search}
             isNewClick={() => navigate("/pessoas/detalhe/nova")}
+            isClickPDF={handlePrint}
             changingSearchText={text => 
               setSearchParams({ buscar: text, pages: '1' },
               { replace: true })}
             />}
     >
       <TableContainer 
+        ref={contentDocumentRef}
         component={Paper} 
         variant="outlined" 
         sx={{ m: 1 , width: 'auto' }}>
@@ -103,19 +109,19 @@ export default function ListOfUsers() {
                 <TableCell>Ação</TableCell>
                 <TableCell>Nome completo</TableCell>
                 <TableCell>Email</TableCell>
+                <TableCell>idade</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-
                 { rows.map(row => (
                   <TableRow key={row.id}>
                     { isLoading && (
-                      <TableCell  colSpan={3}>
+                      <TableCell  colSpan={4}>
                         <Typography 
                           variant="h4" 
-                          sx={{ margin: '-4px 0' }}
+                          sx={{ margin: '-2px 0' }}
                         >
-                          <Skeleton/>
+                          <Skeleton />
                         </Typography>
                       </TableCell>
                     )||(
@@ -133,9 +139,10 @@ export default function ListOfUsers() {
                             >
                             <Icon>edit</Icon>
                           </IconButton>     
-                        </TableCell>
-                        <TableCell>{row.nameCompleted}</TableCell>
-                        <TableCell>{row.email}</TableCell>
+                        </TableCell>                            
+                            <TableCell>{row.nameCompleted}</TableCell>
+                            <TableCell>{row.email}</TableCell>
+                            <TableCell>{row.idade}</TableCell>
                       </>
                     )}
                   </TableRow>

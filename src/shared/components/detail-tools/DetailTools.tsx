@@ -193,7 +193,6 @@ export default function DetailTools({
         {showBackButtonLoading &&(
             <Skeleton width={110} height={60}/>
         )}
-
     </Box>
   )
 }

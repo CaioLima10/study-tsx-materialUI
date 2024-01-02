@@ -9,18 +9,25 @@ import { Box, Grid, LinearProgress, Paper, Typography } from "@mui/material";
 import useUnForm from "../../shared/components/forms/useUnForm";
 import * as yup from "yup"
 import { IKeyValidate } from "../../shared/components/forms/types";
+import { cpf } from "cpf-cnpj-validator";
 
 
 interface IFormData{
     nameCompleted: string
     email: string
+    cpf: string
+    idade: number
+    celular: string
     cidadeId: number
 }
 
 const formValidationSchema: yup.Schema<IFormData> = yup.object().shape({
     nameCompleted: yup.string().required().min(3),
     email: yup.string().required().email(),
-    cidadeId: yup.number().required()
+    cidadeId: yup.number().required(),
+    idade: yup.number().required("Campo obrigatório"),
+    celular: yup.string().required(),
+    cpf: yup.string().required().test((x) => cpf.isValid(x) ),
 }) 
 
 export function UserMembers(){
@@ -55,7 +62,10 @@ export function UserMembers(){
             formRef.current?.setData({
                 nameCompleted: "",
                 email: "",
-                cidadeId: ""
+                cidadeId: "",
+                idade: "",
+                cpf: "",
+                celular: ""
             })
         }
     }, [id , navigate , formRef])
@@ -122,7 +132,7 @@ export function UserMembers(){
     }
 
     return(
-        <BasePageLayout title={ id === "nova" ? "Nova Pessoa" : name}>
+        <BasePageLayout title={ id === "nova" ? "" : name}>
             <DetailTools 
                 textNewButton="nova"
                 showSaveAndDeleteButton
@@ -190,6 +200,36 @@ export function UserMembers(){
                                     fullWidth
                                     name="cidadeId"
                                     label="Cidade"
+                                    disabled={isLoading}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid container item  direction="row" spacing={2}>    
+                            <Grid item xs={16} sm={12} md={6}> 
+                                <UnTextField 
+                                    fullWidth
+                                    name="cpf"
+                                    label="CPF"
+                                    disabled={isLoading}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid container item  direction="row" spacing={2}>    
+                            <Grid item xs={16} sm={12} md={6}> 
+                                <UnTextField 
+                                    fullWidth
+                                    name="celular"
+                                    label="Celular"
+                                    disabled={isLoading}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid container item  direction="row" spacing={2}>    
+                            <Grid item xs={16} sm={12} md={6}> 
+                                <UnTextField 
+                                    fullWidth
+                                    name="idade"
+                                    label="Idade"
                                     disabled={isLoading}
                                 />
                             </Grid>

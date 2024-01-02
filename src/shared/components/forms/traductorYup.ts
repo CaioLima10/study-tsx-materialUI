@@ -8,7 +8,7 @@ setLocale({
     },
     string: {
         email: () => 'O campo precisa conter um email válido',
-        max: ({ max }) => `O campo pode ter no máximo${max} caracteres`,
+        max: ({ max }) => `O campo pode ter no máximo ${max} caracteres`,
         min: ({ min }) => `O campo precisa ter pelo menos ${min} caracteres`,
         length: ({ length }) => `O campo precisa ter exatamente ${length} caracteres`,
     },
@@ -22,7 +22,7 @@ setLocale({
         positive: () => 'O campo precisa ter um valor positivo',
         moreThan: ({ more }) => `O campo precisa ter um valor maior que ${more}`,
         lessThan: ({ less }) => `O campo precisa ter um valor menor que ${less}`,
-        max: ({ max }) => `O campo pode ter no máximo${max} caracteres`,
+        max: ({ max }) => `O campo pode ter no máximo ${max} caracteres`,
         min: ({ min }) => `O campo precisa ter pelo menos ${min} caracteres`,
     },
 

@@ -2,7 +2,7 @@ import { Box, Icon, IconButton, Theme, Typography, useMediaQuery, useTheme } fro
 import AuthContextDrawer from "../context/AuthDrawer";
 
 interface IBasePageLayoutProps{
-    title: string
+    title?: string
     children?: JSX.Element | React.ReactNode
     toolbar?: React.ReactNode
 }
@@ -17,13 +17,14 @@ export default function BasePageLayout({ title , children , toolbar }: IBasePage
 
   return (
     <Box height="100%" display="flex" flexDirection="column" gap={1}>    
-        <Box display="flex" alignItems="center" height={theme.spacing(smDown ? 6 : smDown ? 8 : 12)} >
+        <Box display="flex" alignItems="center" height={theme.spacing(smDown ? 2 : smDown ? 4 : 4)} >
                 <Typography 
-                    variant={mdDown ? "h5" : mdDown ? "h4" : "h3"}
+                    sx={{ display: "flex" , marginLeft: "10px"}}
+                    variant={mdDown ? "h6" : mdDown ? "h6" : "h6"}
                     overflow="hidden"
                     whiteSpace="nowrap"
                     textOverflow="ellipses"
-                >
+                    >
                     { smDown && (
                         <IconButton onClick={toggleDrawerOpen}>
                             <Icon>menu</Icon>

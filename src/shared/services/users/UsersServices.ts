@@ -6,6 +6,9 @@ export interface IListUser{
     id: number
     nameCompleted: string
     email: string
+    cpf: string
+    idade: number
+    celular: string
     cidadeId: number
 }
 
@@ -13,6 +16,9 @@ export interface IDetailUser{
     id: number
     nameCompleted: string
     email: string
+    cpf: string
+    idade: number
+    celular: string
     cidadeId: number
 }
 
